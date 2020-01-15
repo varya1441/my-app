@@ -1,26 +1,35 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import './App.css'
-
-const TestComponent = () => <p>просто render</p>
 
 class App extends Component {
   render() {
+    const { name, surname } = this.props.user
+    const { year, photos } = this.props.page
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Мой топ фото</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+        <p>
+          Привет из App, {name} {surname}!
         </p>
-        <TestComponent
-          data={'fake-data'}
-          anotherData={'fake-data-2'}
-          veryLongLineHere={'yes'}
-        />
+        <p>
+          You have {photos.length} in {year} ?
+        </p>
       </div>
     )
   }
 }
 
-export default App
+// приклеиваем данные из store
+const mapStateToProps = store => {
+  console.log(store) // посмотрим, что же у нас в store?
+  return {
+    user: store.user,
+    page: store.page,
+  }
+}
+
+// в наш компонент App, с помощью connect(mapStateToProps)
+export default connect(mapStateToProps)(App)
